@@ -31,7 +31,8 @@ App = {
       }
       // Legacy dapp browsers...
       else if (window.web3) {
-        App.web3Provider = web3.currentProvider
+        // App.web3Provider = web3.currentProvider
+        // window.web3 = new Web3(web3.currentProvider)
         window.web3 = new Web3(web3.currentProvider)
         // Acccounts always exposed
         web3.eth.sendTransaction({/* ... */})
@@ -44,7 +45,9 @@ App = {
   
     loadAccount: async () => {
       // Set the current blockchain account
-      App.account = web3.eth.accounts[0]
+        // App.account = web3.eth.accounts[0]
+        web3.eth.defaultAccount=web3.eth.accounts[0]
+        // App.account = web3.eth.defaultAccount;
     },
   
     loadContract: async () => {
@@ -55,6 +58,15 @@ App = {
   
       // Hydrate the smart contract with values from the blockchain
       App.todoList = await App.contracts.TodoList.deployed()
+    },
+
+    createTask: async () => {
+      App.setLoading(true)
+      const content = $('#newTask').val()
+      console.log("Address: " + App.todoList.address);
+      console.log("Account: " + App.account);
+      await App.todoList.createTask(content)
+      window.location.reload()
     },
   
     render: async () => {
