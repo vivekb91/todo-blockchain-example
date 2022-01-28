@@ -20,4 +20,4 @@
 
 - Run server: `npm run dev`
 
-- Open `http://localhost:8080` in browser
+- Open `http://localhost:3000` in browser
